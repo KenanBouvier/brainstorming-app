@@ -26,6 +26,13 @@ const getStartup = async(req,res)=>{
 //create new startup
 const createStartup = async(req,res)=>{
   const {idea} = req.body;
+
+
+  //think about only making summary required as otherwise quick adding of idea not a thing
+  if(!idea.summary || !idea.problem || !idea.solution){
+    return res.status(400).json({error:'Please fill in all the fields'});
+  }
+
   try{
     const startup = await Startup.create({idea})
     res.status(200).json(startup);
